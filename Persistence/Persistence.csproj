@@ -4,16 +4,23 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Audit.EntityFramework" Version="14.6.4" />
     <PackageReference Include="Audit.NET" Version="14.6.4" />
-    <PackageReference Include="EntityFramework" Version="6.3.0" />
-    <PackageReference Include="IdentityServer4" Version="2.4.0" />
-    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.4.0" />
+    <PackageReference Include="EntityFramework" Version="6.4.0-preview1-19506-01" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="3.0.0" />
     <PackageReference Include="Localization.SqlLocalizer" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0-preview1.19508.20" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
   </ItemGroup>
 
 

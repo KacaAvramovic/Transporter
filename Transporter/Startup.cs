@@ -1,13 +1,19 @@
-//using FluentValidation.AspNetCore;
-//using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
+using System.Reflection;
+using FluentValidation.AspNetCore;
+using Persistence.Contexts;
+using Persistence.Entities;
+using MediatR;
 
 namespace Transporter
 {
@@ -22,7 +28,6 @@ namespace Transporter
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
             services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddDbContext<TransporterContext>(opt =>
@@ -30,21 +35,47 @@ namespace Transporter
                 opt.UseSqlServer(Configuration.GetConnectionString("Default"));
             }, ServiceLifetime.Transient);
 
-            services.AddCors(options =>
+            services.AddDbContext<ApplicationDbContext>(opt =>
             {
-                options.AddPolicy("apiCorsPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-                    });
-            });
+                opt.UseSqlServer(Configuration.GetConnectionString("FileDatabase"));
+            }, ServiceLifetime.Transient);
+                        
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentityServer()
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
+
+            /*  services.AddCors(options =>
+              {
+                  options.AddPolicy("apiCorsPolicy",
+                      builder =>
+                      {
+                          builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                      });
+              });*/
+
+
+            services.AddControllersWithViews()
+                .AddFluentValidation();
+
+            services.AddRazorPages();
 
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientAppt/build";
+                configuration.RootPath = "ClientApp/build";
             });
 
-
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddMediatR(options =>
+                {
+                    options.AsTransient();
+                },
+                typeof(Program).GetTypeInfo().Assembly
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +84,7 @@ namespace Transporter
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -60,30 +92,34 @@ namespace Transporter
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+                       
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseIdentityServer();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientAppt";
+                spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-        }
 
+        }
     }
 }
