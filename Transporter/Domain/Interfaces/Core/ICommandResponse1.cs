@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Transporter.Domain.Enums;
+﻿using Transporter.Domain.Enums;
 
 namespace Transporter.Domain.Interfaces.Core
 {

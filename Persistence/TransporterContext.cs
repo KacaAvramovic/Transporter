@@ -16,7 +16,7 @@ namespace Persistence
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new UserEntityCOnfigurations());
+            builder.ApplyConfiguration(new UserEntityConfigurations1());
         }
     }
 }
