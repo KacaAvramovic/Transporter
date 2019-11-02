@@ -1,10 +1,10 @@
 ﻿using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Persistence.Entities;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 
-namespace Persistence.Contexts
+namespace Transporter.Data.ApplicationDbContext
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {

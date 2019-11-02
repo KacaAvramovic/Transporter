@@ -1,8 +1,8 @@
 ﻿namespace Persistence.Entities
 {
-    public class User
+    public class Invoice
     {
         public int Id { get; set; }
-        public string Username { get; set; }
+        public string Name { get; set; }
     }
 }

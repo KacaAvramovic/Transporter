@@ -1,13 +1,13 @@
 ﻿using MediatR;
-
+using Persistence.Entities;
 
 namespace Transporter.Application.User.Query
 {
-    public class GetUsersRequest : IRequest<Persistence.Entities.User>
+    public class GetInvoicesRequest : IRequest<Invoice>
     {
         public int Id { get; set; }
 
-        public GetUsersRequest(int id)
+        public GetInvoicesRequest(int id)
         {
             Id = id;
         }

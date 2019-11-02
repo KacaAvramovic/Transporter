@@ -10,15 +10,15 @@ namespace Persistence
         {
         }
 
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             
-            builder.Entity<User>().ToTable("Users");
+            builder.Entity<Invoice>().ToTable("Invoices");
             
-            builder.ApplyConfiguration(new UserEntityConfigurations());
+            builder.ApplyConfiguration(new InvoiceEntityConfigurations());
         }
     }
 }

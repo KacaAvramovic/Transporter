@@ -13,12 +13,12 @@ namespace Transporter.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class InvoiceController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<InvoiceController> _logger;
         IMediator _mediator;
 
-        public UserController(IMediator mediator, ILogger<WeatherForecastController> logger)
+        public InvoiceController(IMediator mediator, ILogger<InvoiceController> logger)
         {
             _mediator = mediator;
             _logger = logger;
@@ -26,16 +26,16 @@ namespace Transporter.Controllers
 
   
         [HttpGet]
-        [Route("{id}", Name = "GetUser")]
-        [ProducesDefaultResponseType(typeof(User))]
+        [Route("{id}", Name = "GetInvoice")]
+        [ProducesDefaultResponseType(typeof(Invoice))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int id, [FromQuery] params string[] extends)
         {
             var extendList = new List<string>(extends);
 
-            var user = await _mediator.Send(new GetUsersRequest(id));
+            var invoice = await _mediator.Send(new GetInvoicesRequest(id));
 
-            return Ok(user);
+            return Ok(invoice);
         }
     }
 }

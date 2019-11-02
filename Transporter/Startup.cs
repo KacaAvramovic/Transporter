@@ -14,6 +14,7 @@ using FluentValidation.AspNetCore;
 using Persistence.Contexts;
 using Persistence.Entities;
 using MediatR;
+using Transporter.Data.ApplicationDbContext;
 
 namespace Transporter
 {
@@ -29,17 +30,16 @@ namespace Transporter
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(options => options.LowercaseUrls = true);
-
+            
             services.AddDbContext<TransporterContext>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("Default"));
             }, ServiceLifetime.Transient);
 
-            services.AddDbContext<ApplicationDbContext>(opt =>
-            {
-                opt.UseSqlServer(Configuration.GetConnectionString("FileDatabase"));
-            }, ServiceLifetime.Transient);
-                        
+            services.AddDbContext<ApplicationDbContext>(options =>
+                     options.UseSqlServer(
+                         Configuration.GetConnectionString("Default")));
+
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
