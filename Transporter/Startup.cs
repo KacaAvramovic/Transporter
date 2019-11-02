@@ -1,19 +1,16 @@
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
-using System.Reflection;
-using FluentValidation.AspNetCore;
-using Persistence.Contexts;
 using Persistence.Entities;
-using MediatR;
+using System.Reflection;
 using Transporter.Data.ApplicationDbContext;
 
 namespace Transporter

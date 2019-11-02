@@ -3,8 +3,9 @@ using Persistence;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Transporter.Application.User.Query;
 
-namespace Transporter.Application.User.Query
+namespace Application.Core.Inovice.Query
 {
 
     public class GetInvoicesRequestHandler : IRequestHandler<GetInvoicesRequest, Persistence.Entities.Invoice>
@@ -20,7 +21,7 @@ namespace Transporter.Application.User.Query
         public async Task<Persistence.Entities.Invoice> Handle(GetInvoicesRequest request, CancellationToken cancellationToken)
         {
             var invoice = _context.Invoices.First(u => u.Id == request.Id);
-            
+
             return await Task.FromResult(invoice);
         }
 

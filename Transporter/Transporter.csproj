@@ -48,11 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Core\Inovice\Command\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 

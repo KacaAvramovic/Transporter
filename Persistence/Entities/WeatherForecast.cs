@@ -1,6 +1,6 @@
 using System;
 
-namespace Transporter
+namespace Persistence.Entities
 {
     public class WeatherForecast
     {

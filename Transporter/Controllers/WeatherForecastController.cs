@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Persistence.Entities;
 
 namespace Transporter.Controllers
 {
